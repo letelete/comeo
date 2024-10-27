@@ -1,0 +1,70 @@
+[
+  [
+    {
+      "line": "In React, to allow component “remember” things,",
+      "blocks": ["import {} from 'react';"]
+    },
+    {
+      "line": "we use the useState hook.",
+      "blocks": ["import { useState } from 'react';", "const [] = useState();"]
+    },
+    {
+      "line": "The useState hook returns a tuple with the current state value,",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [value] = useState();"
+      ]
+    },
+    {
+      "line": "and a function to update it.",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [value, setValue] = useState();"
+      ]
+    },
+    {
+      "line": "The state can be anything, from primitives to complex objects.",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [value, setValue] = useState(initialState);"
+      ]
+    },
+    {
+      "line": "In our example, we'll create a counter component with counter as the state value and setCounter as the function to update it.",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [counter, setCounter] = useState(0);"
+      ]
+    }
+  ],
+
+  [
+    {
+      "line": "Now, in the component we can declare buttons",
+      "blocks": ["return (", "  <>", "  </>", ")"]
+    },
+    {
+      "line": "Now, in the component we can declare buttons",
+      "blocks": [
+        "return (",
+        "  <>",
+        "    <button onClick={}>-1</button>",
+        "    <button onClick={}>+1</button>",
+        "  </>",
+        ")"
+      ]
+    },
+    {
+      "line": "to decrement, and increment the counter.",
+      "transition": { "in": "typewriter" },
+      "blocks": [
+        "return (",
+        "  <>",
+        "    <button onClick={() => setCounter(value => value - 1)}>-1</button>",
+        "    <button onClick={() => setCounter(value => value + 1)}>+1</button>",
+        "  </>",
+        ")"
+      ]
+    }
+  ]
+]

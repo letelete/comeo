@@ -97,14 +97,14 @@ The example below demonstrates a script containing one scene with six actions:
 
 ## Roadmap
 
-### Proof-of-Concept (PoC) [✅ Done]
+### Proof-of-Concept (PoC) [🟢 Done]
 
 - [x] Tokenize JSON-based script
 - [x] Provide a customizable container for running animations (Player)
 - [x] Provide a component that reads tokenized code, and displays it in a viewable format (Sequencer)
 - [x] Allow to preview the animation step-by-step
 
-### Minimal Viable Product (MVP) [🚧 In-Progress]
+### Minimal Viable Product (MVP) [🟡 In-Progress]
 
 - [ ] Transitions run smoothly and can be customized
 - [ ] Diff transitions are predictable (meaning: no unpleasant transitions, token jumps)
@@ -120,7 +120,7 @@ The example below demonstrates a script containing one scene with six actions:
 - [ ] Context-aware controls
 - [ ] Syntax highlighting
 
-### Post MVP [🔜 Soon]
+### Post MVP [🔴 Soon]
 
 - [ ] Option to **Highlight** lines of Block that changed in the step
 - [ ] Option to **Dim** unchanged lines of Block in the step

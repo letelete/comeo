@@ -106,6 +106,7 @@ The example below demonstrates a script containing one scene with six actions:
 
 ### Minimal Viable Product (MVP) [🟡 In-Progress]
 
+- [ ] Script upload
 - [ ] Transitions run smoothly and can be customized
 - [ ] Diff transitions are predictable (meaning: no unpleasant transitions, token jumps)
 - [ ] Generate mp4 video from the transition

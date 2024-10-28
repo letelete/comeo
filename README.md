@@ -125,4 +125,4 @@ The example below demonstrates a script containing one scene with six actions:
 
 - [ ] Option to **Highlight** lines of Block that changed in the step
 - [ ] Option to **Dim** unchanged lines of Block in the step
-- [ ] Highly customizable theming including \_green-\_screen background
+- [ ] Highly customizable theming including *green-screen* background

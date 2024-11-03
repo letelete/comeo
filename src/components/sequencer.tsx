@@ -12,7 +12,8 @@ import {
 } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { Frame, Sequence } from '~/lib/sequence/types';
+import { SceneSequence } from '~/core/scene/scene-sequence';
+import { Frame } from '~/core/scene/types';
 import { cn } from '~/lib/utils';
 
 interface SequencerContextState {
@@ -53,7 +54,7 @@ const SequencerContextProvider = ({
 SequencerContextProvider.displayName = 'SequencerContextProvider';
 
 interface SequencerProps {
-  sequence: Sequence;
+  sequence: SceneSequence;
   initialFrame?: string;
   autoplay?: boolean;
   onStart?: () => void;
@@ -90,15 +91,14 @@ const Sequencer = forwardRef<
     },
     ref
   ) => {
-    if (!sequence.frames.length) {
-      throw new Error('Expected at least 1 frame.');
-    }
-
     const framesMap = useMemo(() => {
       return new Map(sequence.frames.map((frame) => [frame.key, frame]));
     }, [sequence.frames]);
 
-    const initialFrameFallback = sequence.frames[0].key;
+    const initialFrameFallback = sequence.frames[0]?.key;
+    if (!initialFrameFallback) {
+      throw new Error('Expected at least 1 frame.');
+    }
 
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -219,17 +219,16 @@ interface SequencerDisplayProps {
   className?: string;
 }
 
-// TODO: support frame Transition
 const SequencerDisplay = ({ className }: SequencerDisplayProps) => {
   const context = useSequencerContext();
-  const completedTokensCount = useRef<number>(0);
   const hasTriggeredAnimationStart = useRef(false);
 
-  const tokensCount = useMemo(() => {
-    return context.currentFrame.blocks
-      .map((block) => block.tokens.length)
-      .reduce((sum, tokensInBlock) => sum + tokensInBlock, 0);
-  }, [context.currentFrame.blocks]);
+  const frame = context.currentFrame;
+
+  const [animate, setAnimate] = useState(false);
+  const diff = useMemo(() => {
+    return animate ? frame.transition.animate : frame.transition.initial;
+  }, [animate, frame.transition.animate, frame.transition.initial]);
 
   const handleTokenAnimationStart = useCallback(() => {
     if (!hasTriggeredAnimationStart.current) {
@@ -239,44 +238,60 @@ const SequencerDisplay = ({ className }: SequencerDisplayProps) => {
   }, [context]);
 
   const handleTokenAnimationComplete = useCallback(() => {
-    completedTokensCount.current++;
-    console.log(completedTokensCount.current, tokensCount);
-    if (completedTokensCount.current >= tokensCount) {
+    if (diff.value === frame.transition.animate.value) {
       context.onTransitionEnd?.(context.currentFrame.key);
     }
-  }, [context, tokensCount]);
+  }, [context, diff.value, frame.transition.animate.value]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimate(true);
+    }, 100);
+  });
 
   return (
     <div className={cn('relative size-full', className)}>
       <div className='absolute bottom-4 left-4 bg-player-foreground/10 p-2'>
+        <span>{`(${context.currentFrame.index + 1})`}</span>
         {context.currentFrame.line}
       </div>
 
-      {context.currentFrame.blocks.map((block) => (
-        <motion.pre key={block.key} className='flex flex-wrap' layout>
+      <motion.pre className='flex w-full flex-col' layout='position'>
+        <p>
           <AnimatePresence mode='popLayout'>
-            {block.tokens.map((token) => (
+            {diff.changes.map((change) => (
               <motion.span
-                qa-token-key={token.key}
-                key={token.key}
-                layoutId={token.key}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                layout='position'
+                qa-token-key={change.key}
+                key={change.key}
+                layoutId={change.key}
+                initial={
+                  change.added
+                    ? { opacity: 0, scale: 0.8 }
+                    : { opacity: 1, scale: 1 }
+                }
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  transition: {
+                    delay: change.added ? 0.5 : change.removed ? 0.25 : 0,
+                  },
+                }}
                 exit={{ opacity: 0 }}
                 transition={{
                   type: 'spring',
-                  duration: 0.3,
+                  duration: 0.5,
                   bounce: 0,
                 }}
                 onAnimationStart={handleTokenAnimationStart}
                 onAnimationComplete={handleTokenAnimationComplete}
               >
-                {token.value}
+                {change.value}
               </motion.span>
             ))}
           </AnimatePresence>
-        </motion.pre>
-      ))}
+        </p>
+      </motion.pre>
     </div>
   );
 };

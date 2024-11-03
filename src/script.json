@@ -1,0 +1,146 @@
+[
+  [
+    {
+      "line": "In React, to allow component “remember” things,",
+      "blocks": ["import {} from 'react';"]
+    },
+    {
+      "line": "we use the useState hook.",
+      "blocks": ["import { useState } from 'react';", "const [] = useState();"]
+    },
+    {
+      "line": "The useState hook returns a tuple with the current state value,",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [value] = useState();"
+      ]
+    },
+    {
+      "line": "and a function to update it.",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [value, setValue] = useState();"
+      ]
+    },
+    {
+      "line": "The state can be anything, from primitives to complex objects.",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [value, setValue] = useState(initialState);"
+      ]
+    },
+    {
+      "line": "In our example, we'll create a counter component with counter as the state value and setCounter as the function to update it.",
+      "blocks": [
+        "import { useState } from 'react';",
+        "const [counter, setCounter] = useState(0);"
+      ]
+    }
+  ],
+
+  [
+    {
+      "line": "Now, in the component we can declare buttons",
+      "blocks": ["return (", "  <>", "  </>", ")"]
+    },
+    {
+      "line": "Now, in the component we can declare buttons",
+      "blocks": [
+        "return (",
+        "  <>",
+        "    <button onClick={}>-1</button>",
+        "    <button onClick={}>+1</button>",
+        "  </>",
+        ")"
+      ]
+    },
+    {
+      "line": "to decrement, and increment the counter.",
+      "transition": { "in": "typewriter" },
+      "blocks": [
+        "return (",
+        "  <>",
+        "    <button onClick={() => setCounter(value => value - 1)}>-1</button>",
+        "    <button onClick={() => setCounter(value => value + 1)}>+1</button>",
+        "  </>",
+        ")"
+      ]
+    }
+  ],
+
+  [
+    {
+      "line": "But this can get complicated quickly. When you're about to make another financially questionable decision on Amazon,",
+      "blocks": []
+    },
+    {
+      "line": "you see a list of product cards displaying items for sale.",
+      "blocks": [
+        "const Amazon = () => {",
+        "  return <>",
+        "    <ProductsList>",
+        "      <Product />",
+        "      ...",
+        "    </ProductsList>",
+        "  </>",
+        "}"
+      ]
+    },
+    {
+      "line": "Each product has a button that lets the user add it to the cart.",
+      "blocks": [
+        "const Amazon = () => {",
+        "  return <>",
+        "    <ProductsList>",
+        "      <Product>",
+        "        <AddToCartButton />",
+        "      </Product>",
+        "      ...",
+        "    </ProductsList>",
+        "  </>",
+        "}"
+      ]
+    },
+    {
+      "line": "To store information about the cart, we’ll use the useState  hook.",
+      "blocks": [
+        "import { useState } from 'react';",
+        " ",
+        "const Amazon = () => {",
+        "  const [cart, setCart] = React.useState({ products: [] );",
+        " ",
+        "  return <>",
+        "    <ProductsList>",
+        "      <Product>",
+        "        <AddToCartButton />",
+        "      </Product>",
+        "      ...",
+        "    </ProductsList>",
+        "  </>",
+        ")"
+      ]
+    },
+    {
+      "line": "Now, let's implement a function to handle adding a product to the cart.",
+      "blocks": [
+        "import { useState } from 'react';",
+        " ",
+        "const Amazon = () => {",
+        "  const [cart, setCart] = React.useState({ products: [] );",
+        " ",
+        "  const addToCart = (product) => {",
+        "  }",
+        "  ",
+        "  return <>",
+        "    <ProductsList>",
+        "      <Product>",
+        "        <AddToCartButton onClick={addToCart} />",
+        "      </Product>",
+        "      ...",
+        "    </ProductsList>",
+        "  </>",
+        "}"
+      ]
+    }
+  ]
+]

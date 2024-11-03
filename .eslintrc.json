@@ -1,11 +1,17 @@
 {
   "root": true,
   "extends": [
-    "next/core-web-vitals",
-    "next/typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:tailwindcss/recommended",
+    "plugin:jest/recommended",
     "plugin:prettier/recommended"
   ],
+  "plugins": ["jest"],
   "settings": {
     "tailwindcss": {
       "callees": ["cva", "cn", "clsx"]
@@ -19,6 +25,14 @@
     "tailwindcss/no-arbitrary-value": "off",
     "tailwindcss/no-custom-classname": "error",
     "tailwindcss/no-contradicting-classname": "error",
-    "tailwindcss/no-unnecessary-arbitrary-value": "warn"
+    "tailwindcss/no-unnecessary-arbitrary-value": "warn",
+
+    "@typescript-eslint/consistent-type-imports": "error",
+
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
   }
 }

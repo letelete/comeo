@@ -274,7 +274,7 @@ const SequencerDisplay = ({ className }: SequencerDisplayProps) => {
                   opacity: 1,
                   scale: 1,
                   transition: {
-                    delay: change.added ? 0.5 : change.removed ? 0.25 : 0,
+                    delay: change.unchanged ? 0 : 0.5,
                   },
                 }}
                 exit={{ opacity: 0 }}

@@ -256,32 +256,31 @@ const SequencerDisplay = ({ className }: SequencerDisplayProps) => {
         {context.currentFrame.line}
       </div>
 
-      <motion.pre className='flex w-full flex-col' layout='position'>
-        <p>
+      <motion.pre className='flex w-full flex-col'>
+        <motion.p layout='position'>
           <AnimatePresence mode='popLayout'>
             {diff.changes.map((change) => (
               <motion.span
-                layout='position'
                 qa-token-key={change.key}
                 key={change.key}
                 layoutId={change.key}
-                initial={
-                  change.added
-                    ? { opacity: 0, scale: 0.8 }
-                    : { opacity: 1, scale: 1 }
-                }
+                initial={{ opacity: change.unchanged ? 1 : 0 }}
                 animate={{
                   opacity: 1,
-                  scale: 1,
                   transition: {
-                    delay: change.unchanged ? 0 : 0.5,
+                    delay: change.unchanged ? 0 : 0.3,
+                    type: 'spring',
+                    duration: change.unchanged ? 0 : 0.5,
+                    bounce: 0,
                   },
                 }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  type: 'spring',
-                  duration: 0.5,
-                  bounce: 0,
+                exit={{
+                  opacity: 0,
+                  transition: {
+                    duration: animate ? 0 : 0.3,
+                    type: 'spring',
+                    bounce: 0,
+                  },
                 }}
                 onAnimationStart={handleTokenAnimationStart}
                 onAnimationComplete={handleTokenAnimationComplete}
@@ -290,7 +289,7 @@ const SequencerDisplay = ({ className }: SequencerDisplayProps) => {
               </motion.span>
             ))}
           </AnimatePresence>
-        </p>
+        </motion.p>
       </motion.pre>
     </div>
   );

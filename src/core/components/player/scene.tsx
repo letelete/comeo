@@ -1,8 +1,9 @@
 import { ElementRef, useRef } from 'react';
 
-import { Player } from '~/components/ player';
-import { Sequencer, SequencerDisplay } from '~/components/sequencer';
-import { SceneSequence } from '~/core/scene/scene-sequence';
+import { Source } from '~/core/components/player/source';
+import { SourceMonitor } from '~/core/components/player/source-monitor';
+import { Timeline } from '~/core/components/player/timeline';
+import { SceneSequence } from '~/core/lib/scene/scene-sequence';
 import { cn } from '~/lib/utils';
 
 const Scene = ({
@@ -12,7 +13,7 @@ const Scene = ({
   sequence: SceneSequence;
   className?: string;
 }) => {
-  const handler = useRef<ElementRef<typeof Sequencer>>(null);
+  const handler = useRef<ElementRef<typeof Timeline>>(null);
 
   return (
     <div className={cn(className)}>
@@ -22,11 +23,11 @@ const Scene = ({
           <button onClick={() => handler.current?.nextFrame?.()}>next</button>
         </div>
 
-        <Player className='mt-4 p-8' key={sequence.key} res='fhd' responsive>
-          <Sequencer ref={handler} sequence={sequence}>
-            <SequencerDisplay />
-          </Sequencer>
-        </Player>
+        <SourceMonitor className='mt-4 p-8' key={sequence.key} res='fhd'>
+          <Timeline ref={handler} sequence={sequence}>
+            <Source />
+          </Timeline>
+        </SourceMonitor>
       </section>
     </div>
   );

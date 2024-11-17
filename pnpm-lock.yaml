@@ -20,6 +20,9 @@ importers:
       diff:
         specifier: ^7.0.0
         version: 7.0.0
+      diff-match-patch:
+        specifier: ^1.0.5
+        version: 1.0.5
       framer-motion:
         specifier: ^11.11.11
         version: 11.11.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -69,6 +72,9 @@ importers:
       '@types/diff':
         specifier: ^6.0.0
         version: 6.0.0
+      '@types/diff-match-patch':
+        specifier: ^1.0.36
+        version: 1.0.36
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
@@ -881,6 +887,9 @@ packages:
   '@types/babel__traverse@7.20.6':
     resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
 
+  '@types/diff-match-patch@1.0.36':
+    resolution: {integrity: sha512-xFdR6tkm0MWvBfO8xXCSsinYxHcqkQUlcHeSpMC2ukzOb6lwQAfDmW+Qt0AvlGd8HpsS28qKsB+oPeJn9I39jg==}
+
   '@types/diff@6.0.0':
     resolution: {integrity: sha512-dhVCYGv3ZSbzmQaBSagrv1WJ6rXCdkyTcDyoNu1MD8JohI7pR7k8wdZEm+mvdxRKXyHVwckFzWU1vJc+Z29MlA==}
 
@@ -1337,6 +1346,9 @@ packages:
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
+
+  diff-match-patch@1.0.5:
+    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
 
   diff-sequences@29.6.3:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
@@ -3613,6 +3625,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.0
 
+  '@types/diff-match-patch@1.0.36': {}
+
   '@types/diff@6.0.0': {}
 
   '@types/estree@1.0.6': {}
@@ -4105,6 +4119,8 @@ snapshots:
   detect-newline@3.1.0: {}
 
   didyoumean@1.2.2: {}
+
+  diff-match-patch@1.0.5: {}
 
   diff-sequences@29.6.3: {}
 

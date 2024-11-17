@@ -1,7 +1,10 @@
 import { Change, diffWords, diffWordsWithSpace } from 'diff';
 
-import { createKeyGenerator, KeyGenerator } from '~/core/scene/key-generator';
-import type { Action, Scene } from '~/core/script/types';
+import {
+  createKeyGenerator,
+  KeyGenerator,
+} from '~/core/lib/scene/key-generator';
+import type { Action, Scene } from '~/core/lib/script/types';
 
 import type { Diff, Frame, IdentifiableChange, Transition } from './types';
 

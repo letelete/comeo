@@ -15,19 +15,19 @@ const resolutionToSize = {
   '4k-uhd': { width: 3840, height: 2160 },
 } satisfies Record<Resolution, Size>;
 
-type PlayerPropsWithResolution = {
+type SourceMonitorPropsWithResolution = {
   res: Resolution;
 } & { [key in keyof Size]?: never };
 
-type PlayerPropsWithSize = {
+type SourceMonitorPropsWithSize = {
   res?: never;
 } & Size;
 
-type PlayerProps = {
+type SourceMonitorProps = {
   orientation?: Orientation;
   responsive?: boolean;
   className?: string;
-} & (PlayerPropsWithResolution | PlayerPropsWithSize);
+} & (SourceMonitorPropsWithResolution | SourceMonitorPropsWithSize);
 
 const withOrientation = (size: Size, orientation: Orientation) => {
   if (orientation === 'landscape') {
@@ -37,7 +37,7 @@ const withOrientation = (size: Size, orientation: Orientation) => {
   return { width: size.height, height: size.width } satisfies Size;
 };
 
-const Player = ({
+const SourceMonitor = ({
   orientation = 'landscape',
   responsive,
   res,
@@ -45,21 +45,21 @@ const Player = ({
   height,
   className,
   children,
-}: PropsWithChildren<PlayerProps>) => {
-  const playerSize = useMemo(() => {
+}: PropsWithChildren<SourceMonitorProps>) => {
+  const SourceMonitorSize = useMemo(() => {
     const size = res ? resolutionToSize[res] : { width, height };
 
     return withOrientation(size, orientation);
   }, [height, orientation, res, width]);
 
-  const aspectRatio = playerSize.width / playerSize.height;
+  const aspectRatio = SourceMonitorSize.width / SourceMonitorSize.height;
 
   return (
     <div
       style={
         responsive
           ? ({ '--player-aspect-ratio': aspectRatio } as CSSProperties)
-          : { ...playerSize }
+          : { ...SourceMonitorSize }
       }
       className={cn(
         'bg-player text-player-foreground outline-dashed outline-player-border',
@@ -71,6 +71,6 @@ const Player = ({
     </div>
   );
 };
-Player.displayName = 'Player';
+SourceMonitor.displayName = 'SourceMonitor';
 
-export { Player };
+export { SourceMonitor };

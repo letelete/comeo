@@ -1,6 +1,11 @@
-import { createKeyGenerator } from '~/core/scene/key-generator';
-import { Change, Diff, Frame, IdentifiableChange } from '~/core/scene/types';
-import { Scene } from '~/core/script/types';
+import { createKeyGenerator } from '~/core/lib/scene/key-generator';
+import {
+  Change,
+  Diff,
+  Frame,
+  IdentifiableChange,
+} from '~/core/lib/scene/types';
+import { Scene } from '~/core/lib/script/types';
 
 import { SceneSequence } from './scene-sequence';
 

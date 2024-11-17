@@ -1,4 +1,4 @@
-import { ScriptSchema } from '~/core/script/types';
+import { ScriptSchema } from '~/core/lib/script/types';
 import { validateSchema } from '~/lib/validators';
 
 export const parseScript = (scriptDefinition: string) => {

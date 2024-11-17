@@ -12,48 +12,48 @@ import {
 } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { SceneSequence } from '~/core/scene/scene-sequence';
-import { Frame } from '~/core/scene/types';
+import { SceneSequence } from '~/core/lib/scene/scene-sequence';
+import { Frame } from '~/core/lib/scene/types';
 import { cn } from '~/lib/utils';
 
-interface SequencerContextState {
+interface TimelineContextState {
   sequenceKey: string;
   currentFrame: Frame;
   onTransitionStart: (frame: string) => void;
   onTransitionEnd: (frame: string) => void;
 }
 
-const SequencerContext = createContext<SequencerContextState | null>(null);
-SequencerContext.displayName = 'SequencerContext';
+const TimelineContext = createContext<TimelineContextState | null>(null);
+TimelineContext.displayName = 'TimelineContext';
 
-const useSequencerContext = () => {
-  const context = useContext(SequencerContext);
+const useTimelineContext = () => {
+  const context = useContext(TimelineContext);
 
   if (!context) {
     throw new Error(
-      `\`SequencerContext\` must be a child of the \`SequencerContextProvider\`.`
+      `\`TimelineContext\` must be a child of the \`TimelineContextProvider\`.`
     );
   }
 
   return context;
 };
-useSequencerContext.displayName = 'useSequencerContext';
+useTimelineContext.displayName = 'useTimelineContext';
 
-const SequencerContextProvider = ({
+const TimelineContextProvider = ({
   children,
   ...props
-}: PropsWithChildren<SequencerContextState>) => {
+}: PropsWithChildren<TimelineContextState>) => {
   const contextValue = useMemo(() => ({ ...props }), [props]);
 
   return (
-    <SequencerContext.Provider value={contextValue}>
+    <TimelineContext.Provider value={contextValue}>
       {children}
-    </SequencerContext.Provider>
+    </TimelineContext.Provider>
   );
 };
-SequencerContextProvider.displayName = 'SequencerContextProvider';
+TimelineContextProvider.displayName = 'TimelineContextProvider';
 
-interface SequencerProps {
+interface TimelineProps {
   sequence: SceneSequence;
   initialFrame?: string;
   autoplay?: boolean;
@@ -64,7 +64,7 @@ interface SequencerProps {
   className?: string;
 }
 
-interface SequencerHandler {
+interface TimelineHandler {
   completed: boolean;
   play: () => void;
   stop: () => void;
@@ -73,10 +73,7 @@ interface SequencerHandler {
   prevFrame: () => void;
 }
 
-const Sequencer = forwardRef<
-  SequencerHandler,
-  PropsWithChildren<SequencerProps>
->(
+const Timeline = forwardRef<TimelineHandler, PropsWithChildren<TimelineProps>>(
   (
     {
       sequence,
@@ -201,99 +198,18 @@ const Sequencer = forwardRef<
         aria-label='Frame-by-frame animation of the sequence'
         aria-live='polite'
       >
-        <SequencerContextProvider
+        <TimelineContextProvider
           sequenceKey={sequence.key}
           currentFrame={currentFrame}
           onTransitionStart={handleTransitionStart}
           onTransitionEnd={handleTransitionEnd}
         >
           {children}
-        </SequencerContextProvider>
+        </TimelineContextProvider>
       </figure>
     );
   }
 );
-Sequencer.displayName = 'Sequencer';
+Timeline.displayName = 'Timeline';
 
-interface SequencerDisplayProps {
-  className?: string;
-}
-
-const SequencerDisplay = ({ className }: SequencerDisplayProps) => {
-  const context = useSequencerContext();
-  const hasTriggeredAnimationStart = useRef(false);
-
-  const frame = context.currentFrame;
-
-  const [animate, setAnimate] = useState(false);
-  const diff = useMemo(() => {
-    return animate ? frame.transition.animate : frame.transition.initial;
-  }, [animate, frame.transition.animate, frame.transition.initial]);
-
-  const handleTokenAnimationStart = useCallback(() => {
-    if (!hasTriggeredAnimationStart.current) {
-      hasTriggeredAnimationStart.current = true;
-      context.onTransitionStart?.(context.currentFrame.key);
-    }
-  }, [context]);
-
-  const handleTokenAnimationComplete = useCallback(() => {
-    if (diff.value === frame.transition.animate.value) {
-      context.onTransitionEnd?.(context.currentFrame.key);
-    }
-  }, [context, diff.value, frame.transition.animate.value]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAnimate(true);
-    }, 100);
-  });
-
-  return (
-    <div className={cn('relative size-full', className)}>
-      <div className='absolute bottom-4 left-4 bg-player-foreground/10 p-2'>
-        <span>{`(${context.currentFrame.index + 1})`}</span>
-        {context.currentFrame.line}
-      </div>
-
-      <motion.pre className='flex w-full flex-col'>
-        <motion.p layout='position'>
-          <AnimatePresence mode='popLayout'>
-            {diff.changes.map((change) => (
-              <motion.span
-                qa-token-key={change.key}
-                key={change.key}
-                layoutId={change.key}
-                initial={{ opacity: change.unchanged ? 1 : 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: {
-                    delay: change.unchanged ? 0 : 0.3,
-                    type: 'spring',
-                    duration: change.unchanged ? 0 : 0.5,
-                    bounce: 0,
-                  },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: {
-                    duration: animate ? 0 : 0.3,
-                    type: 'spring',
-                    bounce: 0,
-                  },
-                }}
-                onAnimationStart={handleTokenAnimationStart}
-                onAnimationComplete={handleTokenAnimationComplete}
-              >
-                {change.value}
-              </motion.span>
-            ))}
-          </AnimatePresence>
-        </motion.p>
-      </motion.pre>
-    </div>
-  );
-};
-SequencerDisplay.displayName = 'SequencerDisplay';
-
-export { Sequencer, SequencerDisplay };
+export { Timeline, useTimelineContext };
